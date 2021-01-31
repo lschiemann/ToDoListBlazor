@@ -1,0 +1,36 @@
+﻿@page "/todo"
+@inject HttpClient Http
+@using BlazorAppWeb
+@using Plk.Blazor.DragDrop
+
+<div class="row">
+  <div class="col">
+    <button class="btn btn-primary" @onclick="AddList">Add list</button>
+
+    <div class="mt-3">
+      @foreach (var list in _lists)
+      {
+        <List OnRemoveClick="@(l => _lists.Remove(l))" ToDoList="list"></List>
+      }
+    </div>
+  </div>
+</div>
+
+@code {
+  private List<ToDoList> _lists = new List<ToDoList>();
+
+  private async Task AddList()
+  {
+    var result = await Http.PostAsJsonAsync("https://localhost:44389/api/lists", new StringContent(string.Empty));
+    var list = await result.Content.ReadFromJsonAsync<ToDoList>();
+    list.Title = string.Empty;
+    list.Items = new List<ToDoItem>();
+    _lists.Add(list);
+  }  
+
+  protected override async Task OnInitializedAsync()
+  {
+    var lists = await Http.GetFromJsonAsync<ToDoList[]>("https://localhost:44389/api/lists");
+    _lists = lists.ToList();
+  }
+}
