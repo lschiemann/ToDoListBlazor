@@ -4,18 +4,27 @@
 <div class="py-2">
   <div class="form-row" style="place-items: center">
     <div class="col-1">
-      <input type="checkbox" checked="@ToDoItem.IsCompleted" @onchange="@(async (ChangeEventArgs e) => { var copy = CopyItem(ToDoItem); ToDoItem.IsCompleted = (bool) e.Value; await UpdateItem(ToDoItem, copy); } )" />
+      <input type="checkbox"
+             checked="@ToDoItem.IsCompleted"
+             @onchange="@(async (ChangeEventArgs e) => { var copy = CopyItem(ToDoItem); ToDoItem.IsCompleted = (bool) e.Value; await UpdateItem(ToDoItem, copy); } )" />
     </div>
 
     <div class="col-10">
       <div class="row">
         <div class="col">
-          <input class="form-control" placeholder="Title" value="@ToDoItem.Title" @onchange="@(async (ChangeEventArgs e) => { var copy = CopyItem(ToDoItem); ToDoItem.Title = e.Value.ToString(); await UpdateItem(ToDoItem, copy); } )" />
+          <input class="form-control"
+                 placeholder="Title"
+                 value="@ToDoItem.Title"
+                 @onchange="@(async (ChangeEventArgs e) => { var copy = CopyItem(ToDoItem); ToDoItem.Title = e.Value.ToString(); await UpdateItem(ToDoItem, copy); } )" />
         </div>
       </div>
       <div class="row">
         <div class="col">
-          <textarea rows="3" class="form-control" placeholder="Description" value="@ToDoItem.Description" @onchange="@(async (ChangeEventArgs e) => { var copy = CopyItem(ToDoItem); ToDoItem.Description= e.Value.ToString(); await UpdateItem(ToDoItem, copy); } )" />
+          <textarea rows="3"
+                    class="form-control"
+                    placeholder="Description"
+                    value="@ToDoItem.Description"
+                    @onchange="@(async (ChangeEventArgs e) => { var copy = CopyItem(ToDoItem); ToDoItem.Description= e.Value.ToString(); await UpdateItem(ToDoItem, copy); } )" />
         </div>
       </div>
     </div>
