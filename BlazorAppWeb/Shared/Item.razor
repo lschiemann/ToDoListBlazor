@@ -33,7 +33,7 @@
   public ToDoItem ToDoItem { get; set; }
 
   [Parameter]
-  public EventCallback<ToDoItem> OnRemoveClick { get; set; }
+  public EventCallback OnRemoveClick { get; set; }
 
   private async Task UpdateItem(ToDoItem original, ToDoItem copy)
   {
@@ -70,8 +70,7 @@
     var result = await Http.DeleteAsync($"https://localhost:44389/api/lists/{ToDoItem.ToDoListId}/items/{ToDoItem.Id}");
     if (result.IsSuccessStatusCode)
     {
-      await OnRemoveClick.InvokeAsync(ToDoItem);
+      await OnRemoveClick.InvokeAsync();
     }
   }
-
 }

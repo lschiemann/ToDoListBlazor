@@ -19,8 +19,8 @@
 
     <hr class="mt-4 mb-0" />
 
-    <Dropzone Items="@Items" TItem="ToDoItem" OnItemDrop="DropCompleted">
-      <Item ToDoItem="@context" OnRemoveClick="@(item => ToDoList.Items.Remove(item))"></Item>
+    <Dropzone Items="@ToDoList.Items" TItem="ToDoItem" OnItemDrop="DropCompleted">
+      <Item ToDoItem="@context" OnRemoveClick="@(_ => ToDoList.Items.Remove(@context))"></Item>
     </Dropzone>
 
     <div class="row">
@@ -36,15 +36,7 @@
   public ToDoList ToDoList { get; set; }
 
   [Parameter]
-  public EventCallback<ToDoList> OnRemoveClick { get; set; }
-
-  public List<ToDoItem> Items
-  {
-    get
-    {
-      return ToDoList.Items.OrderBy(i => i.Position).ToList();
-    }
-  }
+  public EventCallback OnRemoveClick { get; set; }
 
   private async Task DropCompleted(ToDoItem item)
   {
@@ -106,7 +98,7 @@
     var result = await Http.DeleteAsync($"https://localhost:44389/api/lists/{ToDoList.Id}");
     if (result.IsSuccessStatusCode)
     {
-      await OnRemoveClick.InvokeAsync(ToDoList);
+      await OnRemoveClick.InvokeAsync();
     }
   }
 }
