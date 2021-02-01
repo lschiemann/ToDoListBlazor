@@ -1,0 +1,91 @@
+﻿@inject HttpClient Http
+@using Plk.Blazor.DragDrop
+
+<div style="display: table-cell">
+  <div class="todolist">
+    <div class="row">
+      <div class="col">
+        <EditForm Model="@ToDoList" OnValidSubmit="UpdateList">
+          <DataAnnotationsValidator />
+          <div class="input-group">
+            <InputText class="form-control"
+                       placeholder="Title"
+                       @bind-Value="@ToDoList.Title" />
+            <div class="input-group-append">
+              <button class="close ml-1" @onclick="RemoveList" type="button">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <ValidationMessage For="@(() => ToDoList.Title)" />
+          </div>
+        </EditForm>
+      </div>
+    </div>
+
+    <hr class="mt-4 mb-0" />
+
+    <Dropzone Items="@ToDoList.Items" TItem="ToDoItem" OnItemDrop="DropCompleted">
+      <Item ToDoItem="@context" OnRemoveClick="@(_ => ToDoList.Items.Remove(@context))"></Item>
+    </Dropzone>
+
+    <div class="row">
+      <div class="col">
+        <button class="btn btn-outline-primary btn-block" @onclick="@(_ => AddItem(ToDoList))">Add item</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+@code {
+
+  [Parameter]
+  public ToDoList ToDoList { get; set; }
+
+  [Parameter]
+  public EventCallback OnRemoveClick { get; set; }
+
+  private async Task DropCompleted(ToDoItem item)
+  {
+    HttpResponseMessage result;
+    var newPosition = ToDoList.Items.IndexOf(item) + 1;
+    if (item.ToDoListId == ToDoList.Id)
+    {
+      result = await Http.PostAsJsonAsync($"https://localhost:44389/api/lists/{ToDoList.Id}/items/{item.Id}/moveToPosition", new StringContent(newPosition.ToString()));
+    }
+    else
+    {
+      result = await Http.PostAsJsonAsync($"https://localhost:44389/api/lists/{ToDoList.Id}/items/{item.Id}/moveToList", new StringContent(newPosition.ToString()));
+    }
+    if (!result.IsSuccessStatusCode)
+    {
+      return;
+    }
+
+    var updated = await result.Content.ReadFromJsonAsync<ToDoItem>();
+    item.Position = updated.Position;
+    item.ToDoListId = updated.ToDoListId;
+  }
+
+  private async Task UpdateList()
+  {
+    var result = await Http.PutAsJsonAsync<ToDoList>($"https://localhost:44389/api/lists/{ToDoList.Id}", ToDoList);
+  }
+
+  private async Task AddItem(ToDoList ToDoList)
+  {
+    var result = await Http.PostAsJsonAsync($"https://localhost:44389/api/lists/{ToDoList.Id}/items", new StringContent(string.Empty));
+    var item = await result.Content.ReadFromJsonAsync<ToDoItem>();
+    item.Title = string.Empty;
+    item.Description = string.Empty;
+    ToDoList.Items.Add(item);
+  }
+
+  private async Task RemoveList()
+  {
+    var result = await Http.DeleteAsync($"https://localhost:44389/api/lists/{ToDoList.Id}");
+    if (result.IsSuccessStatusCode)
+    {
+      await OnRemoveClick.InvokeAsync();
+    }
+  }
+}

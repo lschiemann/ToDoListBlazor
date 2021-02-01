@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDo.Blazor", "ToDo.Blazor\ToDo.Blazor.csproj", "{90BF9865-FFF0-4150-8889-6AD5404A9071}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDo.Api", "ToDo.Api\ToDo.Api.csproj", "{DF551B3E-BBF2-4C0C-A4C9-55BCA46B805F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDo.Shared", "ToDo.Shared\ToDo.Shared.csproj", "{2D289B64-0959-4BC0-A986-B34439D0B46D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{90BF9865-FFF0-4150-8889-6AD5404A9071}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90BF9865-FFF0-4150-8889-6AD5404A9071}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90BF9865-FFF0-4150-8889-6AD5404A9071}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90BF9865-FFF0-4150-8889-6AD5404A9071}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF551B3E-BBF2-4C0C-A4C9-55BCA46B805F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF551B3E-BBF2-4C0C-A4C9-55BCA46B805F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF551B3E-BBF2-4C0C-A4C9-55BCA46B805F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF551B3E-BBF2-4C0C-A4C9-55BCA46B805F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D289B64-0959-4BC0-A986-B34439D0B46D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D289B64-0959-4BC0-A986-B34439D0B46D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D289B64-0959-4BC0-A986-B34439D0B46D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D289B64-0959-4BC0-A986-B34439D0B46D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {46ECD388-0410-4985-911C-0AC6DE403CC9}
+	EndGlobalSection
+EndGlobal
